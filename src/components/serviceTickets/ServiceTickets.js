@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react"
+import{ useHistory} from "react-router-dom"
+
+
 // above importing declarations that will allow me to manage state throuought the module using the react library
 
 // the initial null value is serving as the transient state this function below is returning all the JSX or HTML
 
 export const ServiceTicketList = () => {
-    const [serviceTickets, setServiceTickets] = useState([]) // called destructuring value 1. rep of state value 2. sets the state
+    const [serviceTickets, setServiceTickets] = useState([]); // called destructuring value 1. rep of state value 2. sets the state
+    const history = useHistory()
 
     //declaing export function ServiceTicketList to store the varibles which are Arrays that hold information about the serviceTicket
     // the varibles are setting the value initially to null by using an empty string, and empty array.
@@ -27,10 +31,15 @@ export const ServiceTicketList = () => {
     // this creates a boolean?
     return (
         <>
+        <div>
+    <button onClick={() => history.push("/ServiceTickets/create")}>Create Ticket</button>
+</div>
+{/* // button is here to avid issues with mapping and to place button at the begining of where the info renders to the DOM */}
             {
                 serviceTickets.map(
                     (serviceTicket) => {
-                        return <p key={`ticket--{ticket.id}`}>
+                        //  if you put the button in the map you get buttons for all map items
+                        return <p key={`ticket--${serviceTickets.id}`}>
                             {serviceTicket.description} submitted by {serviceTicket.customer.name} and worked on by {serviceTicket.employee.name} </p>
 
 

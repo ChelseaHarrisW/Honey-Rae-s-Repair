@@ -1,28 +1,38 @@
-
-import { CustomerList } from "./Customers/CustomerList"
-import { EmployeeList } from "./Employees/EmployeeList"
-import { ServiceTicketList } from "./ServiceTicket/ServiceTicket"
-
 // ^^the functions above are importing statements that are later called below to render the coresponding import location that
 // below are followed from the listed items. 
 // the functions below are being called in a function called Repairs which is returning the functions ability to render the HTML to the DOM setCustomers
 // see corresponding function at loocation.
 
-export const Repairs = () => {
+import React from "react";
+import { Route, Redirect } from "react-router-dom";
+import { ApplicationViews } from "./ApplicationViews";
+import { NavBar } from "./nav/NavBar";
+import { Login } from "./auth/Login";
+import { Register } from "./auth/Register";
+import "./Repairs.css";
 
-    return (
-        <>
-        <h1>Honey Rae's Repair Shop</h1>
-       
-        <h2>Customer List</h2>
-        <CustomerList />
-        
-        <h2>Employee List</h2>
-        <EmployeeList />
+export const Repairs = () => (
+  <>
+    <Route
+      render={() => {
+        if (localStorage.getItem("honey_customer")) {
+          return (
+            <>
+              <NavBar />
+              <ApplicationViews />
+            </>
+          );
+        } else {
+          return <Redirect to="/login" />;
+        }
+      }}
+    />
 
-        <h2>Service Tickets</h2>
-        <ServiceTicketList />
-        </>
-       
-    )
-}
+    <Route path="/login">
+      <Login />
+    </Route>
+    <Route path="/register">
+      <Register />
+    </Route>
+  </>
+);
