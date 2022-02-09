@@ -20,8 +20,8 @@ export const HireEmployee = () => {
 
         const submitEmployee = {
             
-            employeeName: employeeName,
-            employeeSpecialty: employeeSpecialty,
+            name: employeeName,
+            specialty: employeeSpecialty,
         }
 
         const fetchOption = {
@@ -46,21 +46,15 @@ export const HireEmployee = () => {
                 <div className="form-group">
                     <label htmlFor="description">Name</label>
                     <input
-                        onChange={
-                            (evt) => {
-                                const copy = { ...employeeName }
-                                copy.EmployeeName = evt.target.value
-                            }
-                        }
+                        
                         required autoFocus
                         type="text"
                         className="form-control"
                         placeholder="Employee-Name"
                         onChange={
                             (evt) => {
-                                const copy = { ...employeeName }
-                                copy.description = evt.target.value
-                                setEmployeeName(copy)
+                                
+                                setEmployeeName(evt.target.value)
                             }
 
                         }
@@ -85,9 +79,9 @@ export const HireEmployee = () => {
                         placeholder="Employee-Specialty"
                         onChange={
                             (evt) => {
-                                const copy = { ...employeeSpecialty }
-                                copy.description = evt.target.value
-                                setEmployeeSpecialty(copy)
+                                
+                        
+                                setEmployeeSpecialty(evt.target.value)
                             }
 
                         }
