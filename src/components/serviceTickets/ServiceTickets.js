@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import{ useHistory} from "react-router-dom"
+import { useHistory, Link } from "react-router-dom"
 
 
 // above importing declarations that will allow me to manage state throuought the module using the react library
@@ -20,28 +20,31 @@ export const ServiceTicketList = () => {
         () => {
             fetch("http://localhost:8088/serviceTickets?_expand=employee&_expand=customer") //used qwery string parameter to specify 
                 .then(res => res.json())
-                .then(
-                    (serviceTicketArray) => { setServiceTickets(serviceTicketArray) }
+                .then((serviceTickets) => {
+                    setServiceTickets(serviceTickets)
+                }
                 )
         },
         []
     )
 
     //below we are using useEffect to to filter down the serviceTickets.length to display the updateMessages function to render the coresponding messages below only if the criteria is true.
-    // this creates a boolean?
+    // button below is here to avid issues with mapping and to place button at the begining of where the info renders to the DOM */}
     return (
         <>
-        <div>
-    <button onClick={() => history.push("/ServiceTickets/create")}>Create Ticket</button>
-</div>
-{/* // button is here to avid issues with mapping and to place button at the begining of where the info renders to the DOM */}
+            <div>
+                <button onClick={() => history.push("/ServiceTickets/create")}>Create Ticket</button>
+            </div>
             {
                 serviceTickets.map(
-                    (serviceTicket) => {
+                    (serviceTickets) => {
                         //  if you put the button in the map you get buttons for all map items
-                        return <p key={`ticket--${serviceTickets.id}`}>
-                            {serviceTicket.description} submitted by {serviceTicket.customer.name} and worked on by {serviceTicket.employee.name} </p>
+                        return <div key={`ServiceTickets/create--${serviceTickets.id}`}>
+                            <p className={serviceTickets.emergency ? 'emergency' : 'ServiceTickets'}>
+                                {serviceTickets.emergency ? "🚑" : ""} <Link to={`/serviceTickets/${serviceTickets.id}`}> {serviceTickets.description} </Link>submitted by {serviceTickets.customer.name} and worked on by {serviceTickets.employee.name} 
 
+                            </p>
+                        </div>
 
                     }
                 )
@@ -49,7 +52,8 @@ export const ServiceTicketList = () => {
         </>
 
     )
-}
+        }
+
 
 // Returning a div that displays a string of totalServiceTicketMessage followed by a map array method that will return a serviceTicketObj.name
 // we do this by way of the key serviceTicket--serviceTicketObj.id interpullated to find the serviceTicketObj.name wraped in a p tab for styling purposes

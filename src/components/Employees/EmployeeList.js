@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import { Link, useHistory } from "react-router-dom"
 // importing these functions from react
 // for useEffect in useEffect see below
 //  useEffect is a takes 2 parameters a fetch function, and a
@@ -6,6 +7,7 @@ import React, { useEffect, useState } from "react"
 export const EmployeeList = () => {
     // declaring the functional component names employee list which allow us to export what I need to see on DOM or JSX
     const [employees, setEmployees] = useState([])
+    const history = useHistory()
     // declaring varibles which hold the array useState array which accept a function followed by an array.
     // the second varible is being used to show the changed state
     console.log(useState("hello world"))
@@ -26,13 +28,18 @@ export const EmployeeList = () => {
     // we are able to desplat the name by using dot notation to invoke the obj defined int the parameters called above denoted as employeeObj
     return (
         <>
+        <div>
+                <button onClick={() => history.push("/Employee/create")}>Hire Employee</button>
+            </div>
+
+        Employee Specialties:
             {
                 employees.map(
                     (employeeObj) => {
                         // declaring employeeObj and returning the statement below.
                         return (
                             <>
-                                <p key={`specialty--${employeeObj.id}`}>{employeeObj.specialty}</p>
+                              <div   key={`specialty--${employeeObj.id}`}> {employeeObj.specialty} </div>
                             </>
                         )
                     }
@@ -44,7 +51,9 @@ export const EmployeeList = () => {
                         // declaring employeeObj and returning the statement below.
                         return (
                             <>
-                                <p key={`employee--${employeeObj.id}`}>{employeeObj.name}</p>
+                                <p key={`employee--${employeeObj.id}`}></p>
+                                <Link to={`/employees/${employeeObj.id}`}>{employeeObj.name}</Link>
+
                             </>
                         )
                     }

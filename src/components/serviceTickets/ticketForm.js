@@ -14,12 +14,13 @@ export const TicketForm = () => {
     const history = useHistory()
 
 
+    // prevent default prevents the default refresh
     const saveTicket = (SubmitTicketClicked) => {
         SubmitTicketClicked.preventDefault()
 
         const submitTicket = {
             customerId: parseInt(localStorage.getItem("honey_customer")),
-            employeeId: 0,
+            employeeId: 1,
             description: ticket.description,
             emergency: ticket.emergency,
             dateCompleted: ""
