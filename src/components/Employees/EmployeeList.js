@@ -7,9 +7,10 @@ import { Link, useHistory } from "react-router-dom"
 export const EmployeeList = () => {
     // declaring the functional component names employee list which allow us to export what I need to see on DOM or JSX
     const [employees, setEmployees] = useState([])
-    const history = useHistory()
     // declaring varibles which hold the array useState array which accept a function followed by an array.
     // the second varible is being used to show the changed state
+    const history = useHistory()
+    // later invoked in in the onclick to serve as the function responsible for redirecting us to  /Employee/create
     console.log(useState("hello world"))
     console.log(employees)
 

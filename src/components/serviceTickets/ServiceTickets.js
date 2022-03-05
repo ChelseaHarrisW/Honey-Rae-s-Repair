@@ -8,6 +8,7 @@ import { useHistory, Link } from "react-router-dom"
 
 export const ServiceTicketList = () => {
     const [serviceTickets, setServiceTickets] = useState([]); // called destructuring value 1. rep of state value 2. sets the state
+    const [deleteServiceTickets, setDeleteServiceTickets] = useState({}); // called destructuring value 1. rep of state value 2. sets the state
     const history = useHistory()
 
     //declaing export function ServiceTicketList to store the varibles which are Arrays that hold information about the serviceTicket
@@ -26,7 +27,21 @@ export const ServiceTicketList = () => {
                 )
         },
         []
-    )
+        
+    );
+    const deleteTicket = (id) => {
+        fetch(`http://localhost:8088/serviceTickets/${id}`, {
+            method: "DELETE"
+        })
+        .then(() => fetch("http://localhost:8088/serviceTickets")) //used qwery string parameter to specify
+      .then((res) => res.json()) // converting to JSON
+      .then((deleteServiceTickets) => {
+        //converting from JSON to Javascript
+        setServiceTickets(deleteServiceTickets);
+         //updating the state
+      });
+  };
+    
 
     //below we are using useEffect to to filter down the serviceTickets.length to display the updateMessages function to render the coresponding messages below only if the criteria is true.
     // button below is here to avid issues with mapping and to place button at the begining of where the info renders to the DOM */}
@@ -41,9 +56,11 @@ export const ServiceTicketList = () => {
                         //  if you put the button in the map you get buttons for all map items
                         return <div key={`ServiceTickets/create--${serviceTickets.id}`}>
                             <p className={serviceTickets.emergency ? 'emergency' : 'ServiceTickets'}>
-                                {serviceTickets.emergency ? "🚑" : ""} <Link to={`/serviceTickets/${serviceTickets.id}`}> {serviceTickets.description} </Link>submitted by {serviceTickets.customer.name} and worked on by {serviceTickets.employee.name} 
-
-                            </p>
+                                {serviceTickets.emergency ? "🚑" : ""} <Link to={`/serviceTickets/${serviceTickets.id}`}> {serviceTickets.description} </Link>submitted by {serviceTickets.customer?.name} and worked on by {serviceTickets.employee?.name} </p>
+                            
+                            <button onClick={() => {
+                                deleteTicket(serviceTickets.id)
+                            }}>Delete</button>
                         </div>
 
                     }
@@ -52,7 +69,7 @@ export const ServiceTicketList = () => {
         </>
 
     )
-        }
+}
 
 
 // Returning a div that displays a string of totalServiceTicketMessage followed by a map array method that will return a serviceTicketObj.name

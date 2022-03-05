@@ -24,7 +24,7 @@ console.log(employeeId)
         <h2>Employee {employeeId} Employee Details</h2>
             <section className="employee">
                 <h3 className="employee__name">{employee.name}</h3>
-                <div className="employee__specialty">Submitted by {employee.specialty}</div>
+                <div className="employee__specialty">specializes in {employee.specialty}</div>
               
             </section>
         </>

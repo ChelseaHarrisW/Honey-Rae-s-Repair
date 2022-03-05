@@ -31,26 +31,26 @@ export const Ticket = () => {
   }, []);
   // how do I know when I need a change event versus a function with React?
   const assignEmployee = (changeEvent) => {
-        const newServiceTicketObject = {
-     
+
+    const newServiceTicketObject = {
+
       customerId: parseInt(localStorage.getItem('honey_customer')),
       employeeId: parseInt(changeEvent.target.value),
       description: ServiceTicket.description,
       emergency: ServiceTicket.emergency,
       dateCompleted: ServiceTicket.dateCompleted,
-    }
-    return (fetch(`http://localhost:8088/serviceTickets/${ticketId}`), {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json"
-         },
-        body: JSON.stringify(newServiceTicketObject),
-      })
-        .then(res => res.json())
-        .then(() => {
-    history.push("/serviceTickets")
-        })
-    
+    };
+
+    fetch(`http://localhost:8088/serviceTickets/${ticketId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+              },
+      "body": JSON.stringify(newServiceTicketObject),
+    })
+       .then(res => res.json())
+      .then(() => { history.push("/serviceTickets") })
+
   }
 
   return (
@@ -62,9 +62,9 @@ export const Ticket = () => {
           Submitted by {ServiceTicket.customer?.name}
         </div>
         <div className="ticket__employee">
-          <select id="employee" onChange={ assignEmployee}>
+          <select id="employee" onChange={assignEmployee}>
             {employees.map((employee) => {
-              return <option value={employee.id}key={`employee--${employee.id}`}>{employee.name}</option>;
+              return <option value={employee.id} key={`employee--${employee.id}`}>{employee.name}</option>;
             })}
           </select>
         </div>
